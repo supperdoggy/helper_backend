@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "ffd088a3-e690-4179-9aad-9ea60e56758a",
+		"name": "helper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25030567"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test2@mail.com\",\n    \"password\": \"admin@asdxz123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "161.35.29.71/api/v1/user/create",
+							"host": [
+								"161",
+								"35",
+								"29",
+								"71"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"feecb126-7ebf-4d6e-b608-d0b15bf9261c\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "161.35.29.71/api/v1/user/delete",
+							"host": [
+								"161",
+								"35",
+								"29",
+								"71"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"05acfdb7-a2d7-4ba3-8a68-58777088d029\",\n    \"email\": \"random@mail.com\",\n    \"password\": \"Ssdz@1sdSzc123v\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "161.35.29.71/api/v1/user/update",
+							"host": [
+								"161",
+								"35",
+								"29",
+								"71"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"token4@mail.com\",\n    \"first_name\": \"Max\",\n    \"last_name\": \"Marchyshak\",\n    \"password\": \"randomPass123123213@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "161.35.29.71/api/v1/auth/register",
+							"host": [
+								"161",
+								"35",
+								"29",
+								"71"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "check token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"dc71751ec017e9dda19b44cf8314914d\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "161.35.29.71/api/v1/auth/check_token",
+							"host": [
+								"161",
+								"35",
+								"29",
+								"71"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"check_token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"token4@mail.com\",\n    \"password\": \"randomPass123123213@\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "161.35.29.71/api/v1/auth/login",
+							"host": [
+								"161",
+								"35",
+								"29",
+								"71"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
