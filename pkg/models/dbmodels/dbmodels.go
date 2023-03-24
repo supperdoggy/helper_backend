@@ -17,3 +17,19 @@ type Token struct {
 	TokenStr string    `json:"token_str"`
 	Expire   time.Time `json:"expire"`
 }
+
+type Advert struct {
+	ID          string   `bson:"_id"`
+	Name        string   `bson:"name"`
+	Body        string   `bson:"body"`
+	Type        string   `bson:"type"`
+	Category    string   `bson:"category"`
+	Location    string   `bson:"location"`
+	Attachments []string `bson:"attachments"`
+}
+
+type Attachment struct {
+	ID   string `bson:"_id"`
+	Name string `bson:"name"`
+	Data []byte `bson:"data"`
+}
