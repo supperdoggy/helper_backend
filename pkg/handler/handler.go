@@ -185,9 +185,9 @@ func (h *handler) Register(c *gin.Context) {
 
 	if err := validation.ValidateStruct(&req,
 		validation.Field(&req.FirstName, validation.Required, validation.
-			Match(regexp.MustCompile("^[a-zA-Z]+$"))),
+			Match(regexp.MustCompile("^[a-zA-Z]+$")), validation.Length(2, 100)),
 		validation.Field(&req.LastName, validation.Required, validation.
-			Match(regexp.MustCompile("^[a-zA-Z]+$"))),
+			Match(regexp.MustCompile("^[a-zA-Z]+$")), validation.Length(2, 100)),
 		validation.Field(&req.Email, validation.Required, is.Email),
 		validation.Field(&req.Password, validation.Required, validation.Length(6, 100)),
 	); err != nil {
