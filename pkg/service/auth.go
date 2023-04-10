@@ -77,3 +77,37 @@ func (s *service) Login(ctx context.Context, email, password string) (userID, to
 
 	return user.ID, token, nil
 }
+
+func (s *service) NewEmailCode(ctx context.Context, email string) error {
+	email = strings.ToLower(email)
+
+	code, err := s.emailClient.SendEmail(ctx, email)
+	if err != nil {
+		s.logger.Error("SendEmail error", zap.Error(err))
+		return err
+	}
+
+	err = s.db.NewEmailCode(ctx, email, code)
+	if err != nil {
+		s.logger.Error("NewEmailCode error", zap.Error(err))
+		return err
+	}
+
+	return nil
+}
+
+func (s *service) CheckEmailCode(ctx context.Context, email, code string) error {
+	email = strings.ToLower(email)
+
+	ok, err := s.db.CheckEmailCode(ctx, email, code)
+	if err != nil {
+		s.logger.Error("CheckEmailCode error", zap.Error(err))
+		return err
+	}
+
+	if !ok {
+		return errors.New("invalid code")
+	}
+
+	return nil
+}

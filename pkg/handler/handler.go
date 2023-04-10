@@ -26,6 +26,10 @@ type IHandler interface {
 
 	// get advert attachments
 	GetAdvertAttachments(c *gin.Context)
+
+	// email validation
+	NewEmailCode(c *gin.Context)
+	CheckEmailCode(c *gin.Context)
 }
 
 type handler struct {
