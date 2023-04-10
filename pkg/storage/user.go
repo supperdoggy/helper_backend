@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/supperdoggy/helper/pkg/models"
 	"github.com/supperdoggy/helper/pkg/models/dbmodels"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -31,12 +32,28 @@ type IMongoClient interface {
 	// auth
 	NewToken(ctx context.Context, userID string) (string, error)
 	CheckToken(ctx context.Context, token string) (bool, string)
+
+	// adverts
+	CreateAdvert(ctx context.Context, name, body, atype, category, location, userID string, attachments [][]byte) (*dbmodels.Advert, error)
+	LinkAttachments(ctx context.Context, advertID string, attachIDs []string) error
+	DeleteAdvert(ctx context.Context, id string) error
+	GetAdvert(ctx context.Context, id string) (*dbmodels.Advert, error)
+
+	// attachments
+	CreateAttachment(ctx context.Context, name string, data []byte) (*dbmodels.Attachment, error)
+	DeleteAttachment(ctx context.Context, id string) error
+	GetAttachment(ctx context.Context, id string) (*dbmodels.Attachment, error)
+	GetAdvertAttachments(ctx context.Context, ids []string) ([]*dbmodels.Attachment, error)
+	GetAdverts(ctx context.Context, filter models.AdvertsFilter, limit, offset int) ([]*dbmodels.Advert, error)
 }
 
 type mongoClient struct {
-	logger   *zap.Logger
-	client   *mongo.Client
-	usersCol *mongo.Collection
+	logger *zap.Logger
+	client *mongo.Client
+
+	usersCol       *mongo.Collection
+	advertsCol     *mongo.Collection
+	attachmentsCol *mongo.Collection
 
 	cache tokenCache
 }
@@ -55,7 +72,9 @@ func NewMongoClient(ctx context.Context, url string, l *zap.Logger) (IMongoClien
 			m: make(map[string]dbmodels.Token),
 		},
 
-		usersCol: client.Database("helper").Collection("users"),
+		usersCol:       client.Database("helper").Collection("users"),
+		advertsCol:     client.Database("helper").Collection("adverts"),
+		attachmentsCol: client.Database("helper").Collection("attachments"),
 	}, nil
 }
 
