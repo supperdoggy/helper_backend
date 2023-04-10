@@ -3,8 +3,11 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"regexp"
 
 	"github.com/gin-gonic/gin"
+	validation "github.com/go-ozzo/ozzo-validation"
+	"github.com/go-ozzo/ozzo-validation/is"
 	"github.com/supperdoggy/helper/pkg/models"
 	"go.uber.org/zap"
 )
@@ -70,6 +73,20 @@ func (h *handler) Register(c *gin.Context) {
 	if err := c.Bind(&req); err != nil {
 		h.logger.Error("error Bing", zap.Error(err))
 		resp.Error = "error reading request"
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	if err := validation.ValidateStruct(&req,
+		validation.Field(&req.FirstName, validation.Required, validation.
+			Match(regexp.MustCompile("^[a-zA-ZА-Яа-я]+$"))),
+		validation.Field(&req.LastName, validation.Required, validation.
+			Match(regexp.MustCompile("^[a-zA-ZА-Яа-я]+$"))),
+		validation.Field(&req.Email, validation.Required, is.Email),
+		validation.Field(&req.Password, validation.Required, validation.Length(6, 100)),
+	); err != nil {
+		h.logger.Error("error Bing", zap.Error(err))
+		resp.Error = err.Error()
 		c.JSON(http.StatusBadRequest, resp)
 		return
 	}
