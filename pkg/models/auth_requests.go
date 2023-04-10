@@ -43,3 +43,22 @@ type LoginResp struct {
 	Token  string `json:"token"`
 	Error  string `json:"error"`
 }
+
+type NewEmailCodeReq struct {
+	Email string `json:"email"`
+}
+
+type NewEmailCodeResp struct {
+	OK    bool   `json:"ok"`
+	Error string `json:"error"`
+}
+
+type CheckEmailCodeReq struct {
+	Email string `json:"email"`
+	Code  string `json:"code"`
+}
+
+type CheckEmailCodeResp struct {
+	OK    bool   `json:"ok"`
+	Error string `json:"error"`
+}

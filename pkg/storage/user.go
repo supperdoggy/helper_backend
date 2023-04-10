@@ -2,6 +2,7 @@ package storage
 
 import (
 	"context"
+	"errors"
 	"sync"
 	"time"
 
@@ -18,6 +19,11 @@ type obj map[string]interface{}
 
 type tokenCache struct {
 	m   map[string]dbmodels.Token
+	mut sync.Mutex
+}
+
+type emailCodeCache struct {
+	m   map[string]dbmodels.EmailCode
 	mut sync.Mutex
 }
 
@@ -45,6 +51,10 @@ type IMongoClient interface {
 	GetAttachment(ctx context.Context, id string) (*dbmodels.Attachment, error)
 	GetAdvertAttachments(ctx context.Context, ids []string) ([]*dbmodels.Attachment, error)
 	GetAdverts(ctx context.Context, filter models.AdvertsFilter, limit, offset int) ([]*dbmodels.Advert, error)
+
+	// email codes
+	NewEmailCode(ctx context.Context, email, code string) error
+	CheckEmailCode(ctx context.Context, email, code string) (bool, error)
 }
 
 type mongoClient struct {
@@ -55,7 +65,8 @@ type mongoClient struct {
 	advertsCol     *mongo.Collection
 	attachmentsCol *mongo.Collection
 
-	cache tokenCache
+	cache          tokenCache
+	emailCodeCache emailCodeCache
 }
 
 func NewMongoClient(ctx context.Context, url string, l *zap.Logger) (IMongoClient, error) {
@@ -70,6 +81,9 @@ func NewMongoClient(ctx context.Context, url string, l *zap.Logger) (IMongoClien
 		logger: l,
 		cache: tokenCache{
 			m: make(map[string]dbmodels.Token),
+		},
+		emailCodeCache: emailCodeCache{
+			m: make(map[string]dbmodels.EmailCode),
 		},
 
 		usersCol:       client.Database("helper").Collection("users"),
@@ -124,4 +138,47 @@ func (c *mongoClient) GetUserByEmail(ctx context.Context, email string) (*dbmode
 	}
 
 	return &user, nil
+}
+
+func (c *mongoClient) NewEmailCode(ctx context.Context, email, code string) error {
+
+	// check if email occupied
+	user, err := c.GetUserByEmail(ctx, email)
+	if err != nil && err != mongo.ErrNoDocuments || user != nil {
+		return errors.New("email occupied")
+	}
+
+	emailcode := dbmodels.EmailCode{
+		Email:  email,
+		Code:   code,
+		Expire: time.Now().Add(time.Minute * 10),
+	}
+
+	c.emailCodeCache.mut.Lock()
+	c.emailCodeCache.m[email] = emailcode
+	c.emailCodeCache.mut.Unlock()
+
+	return nil
+}
+
+func (c *mongoClient) CheckEmailCode(ctx context.Context, email, code string) (bool, error) {
+	c.emailCodeCache.mut.Lock()
+	defer c.emailCodeCache.mut.Unlock()
+
+	emailcode, ok := c.emailCodeCache.m[email]
+	if !ok {
+		return false, errors.New("no such email")
+	}
+
+	if emailcode.Code != code {
+		return false, errors.New("wrong code")
+	}
+
+	if emailcode.Expire.Before(time.Now()) {
+		return false, errors.New("expired")
+	}
+
+	delete(c.emailCodeCache.m, email)
+
+	return true, nil
 }

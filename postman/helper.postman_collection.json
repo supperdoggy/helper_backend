@@ -225,6 +225,46 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "new email code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{domen}}/api/v1/auth/new_email_code",
+							"host": [
+								"{{domen}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"new_email_code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate email code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{domen}}/api/v1/auth/check_email_code",
+							"host": [
+								"{{domen}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"check_email_code"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

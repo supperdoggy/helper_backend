@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/supperdoggy/helper/config"
+	"github.com/supperdoggy/helper/pkg/clients/email"
 	"github.com/supperdoggy/helper/pkg/handler"
 	"github.com/supperdoggy/helper/pkg/service"
 	"github.com/supperdoggy/helper/pkg/storage"
@@ -29,7 +30,8 @@ func main() {
 		logger.Fatal("error connecting to mongo", zap.Error(err))
 	}
 
-	services := service.NewService(logger, mongo)
+	emailClient := email.NewClient(*logger, cfg.EmailCheckService)
+	services := service.NewService(logger, mongo, emailClient)
 	handlers := handler.NewHandler(logger, services)
 
 	r := gin.Default()
@@ -43,6 +45,8 @@ func main() {
 	auth.POST("/register", handlers.Register)
 	auth.POST("/login", handlers.Login)
 	auth.POST("/check_token", handlers.CheckToken)
+	auth.POST("/new_email_code", handlers.NewEmailCode)
+	auth.POST("/check_email_code", handlers.CheckEmailCode)
 
 	// users
 	apiUser := api.Group("/user")

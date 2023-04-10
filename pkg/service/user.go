@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/supperdoggy/helper/pkg/clients/email"
 	"github.com/supperdoggy/helper/pkg/models"
 	"github.com/supperdoggy/helper/pkg/models/dbmodels"
 	"github.com/supperdoggy/helper/pkg/storage"
@@ -32,21 +33,27 @@ type IService interface {
 
 	// attachments
 	GetAdvertAttachments(ctx context.Context, advertID string) ([]*dbmodels.Attachment, error)
+
+	// email validation
+	NewEmailCode(ctx context.Context, email string) error
+	CheckEmailCode(ctx context.Context, email, code string) error
 }
 
 type service struct {
-	logger *zap.Logger
-	db     storage.IMongoClient
+	logger      *zap.Logger
+	db          storage.IMongoClient
+	emailClient email.IEmailClient
 }
 
 var (
 	ErrBadValues = errors.New("bad values")
 )
 
-func NewService(l *zap.Logger, d storage.IMongoClient) IService {
+func NewService(l *zap.Logger, d storage.IMongoClient, emailClient email.IEmailClient) IService {
 	return &service{
-		logger: l,
-		db:     d,
+		logger:      l,
+		db:          d,
+		emailClient: emailClient,
 	}
 }
 
