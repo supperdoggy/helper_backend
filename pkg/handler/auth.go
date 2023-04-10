@@ -63,6 +63,26 @@ func (h *handler) CheckToken(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
+func (h *handler) Middleware(c *gin.Context) {
+	// read from the header the token
+	token := c.GetHeader("Authorization")
+	if token == "" {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		return
+	}
+
+	// check the token
+	userID, err := h.service.CheckToken(c.Request.Context(), token)
+	if err != nil {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		return
+	}
+
+	// set the userID to the context
+	c.Set("userID", userID)
+	c.Next()
+}
+
 func (h *handler) Register(c *gin.Context) {
 	var (
 		req  models.RegisterReq

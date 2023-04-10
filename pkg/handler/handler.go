@@ -16,6 +16,7 @@ type IHandler interface {
 	Login(c *gin.Context)
 	Register(c *gin.Context)
 	CheckToken(c *gin.Context)
+	Middleware(c *gin.Context)
 
 	// adverts
 	CreateAdvert(c *gin.Context)

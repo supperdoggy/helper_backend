@@ -13,7 +13,13 @@
 					"name": "create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"email\": \"test2@mail.com\",\n    \"password\": \"admin@asdxz123\"\n}",
@@ -24,12 +30,9 @@
 							}
 						},
 						"url": {
-							"raw": "161.35.29.71/api/v1/user/create",
+							"raw": "{{domen}}/api/v1/user/create",
 							"host": [
-								"161",
-								"35",
-								"29",
-								"71"
+								"{{domen}}"
 							],
 							"path": [
 								"api",
@@ -45,7 +48,13 @@
 					"name": "delete user",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"id\": \"feecb126-7ebf-4d6e-b608-d0b15bf9261c\"\n}",
@@ -56,12 +65,9 @@
 							}
 						},
 						"url": {
-							"raw": "161.35.29.71/api/v1/user/delete",
+							"raw": "{{domen}}/api/v1/user/delete",
 							"host": [
-								"161",
-								"35",
-								"29",
-								"71"
+								"{{domen}}"
 							],
 							"path": [
 								"api",
@@ -88,12 +94,9 @@
 							}
 						},
 						"url": {
-							"raw": "161.35.29.71/api/v1/user/update",
+							"raw": "{{domen}}/api/v1/user/update",
 							"host": [
-								"161",
-								"35",
-								"29",
-								"71"
+								"{{domen}}"
 							],
 							"path": [
 								"api",
@@ -117,7 +120,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"token4@mail.com\",\n    \"first_name\": \"Max\",\n    \"last_name\": \"Marchyshak\",\n    \"password\": \"randomPass123123213@\"\n}",
+							"raw": "{\n    \"email\": \"token23213@mail.com\",\n    \"first_name\": \"Maksym\",\n    \"last_name\": \"Marchyshak\",\n    \"password\": \"randomPass123123213@\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -125,12 +128,9 @@
 							}
 						},
 						"url": {
-							"raw": "161.35.29.71/api/v1/auth/register",
+							"raw": "{{domen}}/api/v1/auth/register",
 							"host": [
-								"161",
-								"35",
-								"29",
-								"71"
+								"{{domen}}"
 							],
 							"path": [
 								"api",
@@ -157,12 +157,9 @@
 							}
 						},
 						"url": {
-							"raw": "161.35.29.71/api/v1/auth/check_token",
+							"raw": "{{domen}}/api/v1/auth/check_token",
 							"host": [
-								"161",
-								"35",
-								"29",
-								"71"
+								"{{domen}}"
 							],
 							"path": [
 								"api",
@@ -189,12 +186,9 @@
 							}
 						},
 						"url": {
-							"raw": "161.35.29.71/api/v1/auth/login",
+							"raw": "{{domen}}/api/v1/auth/login",
 							"host": [
-								"161",
-								"35",
-								"29",
-								"71"
+								"{{domen}}"
 							],
 							"path": [
 								"api",
@@ -241,7 +235,13 @@
 					"name": "create advert",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"user_id\": \"333333\",\n    \"name\": \"Хочу пив123а....\",\n\t\"body\": \"Дайте пива будьвфівфі ласка я вас дуже прошу....\",\n\t\"type\": \"request\",\n\t\"category\": \"Жир\",\n\t\"location\": \"Львів\",\n    \"attachments\": [[1, 1, 1], [2, 2, 2]]\n}",
@@ -252,11 +252,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/adverts/create",
+							"raw": "{{domen}}/api/v1/adverts/create",
 							"host": [
-								"localhost"
+								"{{domen}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -271,7 +270,13 @@
 					"name": "get advert",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"id\": \"f48f8d24-a559-4ae0-b09a-4a2d0499c3f4\"\n}",
@@ -282,11 +287,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/adverts/get",
+							"raw": "{{domen}}/api/v1/adverts/get",
 							"host": [
-								"localhost"
+								"{{domen}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -301,13 +305,18 @@
 					"name": "get attachments",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:8080/api/v1/adverts/attachments/4af106bc-f0ec-43e9-b95e-396fd971b9d0",
+							"raw": "{{domen}}/api/v1/adverts/attachments/4af106bc-f0ec-43e9-b95e-396fd971b9d0",
 							"host": [
-								"localhost"
+								"{{domen}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -323,7 +332,13 @@
 					"name": "delete advert",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"id\": \"4af106bc-f0ec-43e9-b95e-396fd971b9d0\"\n}",
@@ -334,11 +349,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/adverts/delete",
+							"raw": "{{domen}}/api/v1/adverts/delete",
 							"host": [
-								"localhost"
+								"{{domen}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -353,7 +367,13 @@
 					"name": "filter",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"filter\": {\n        \"type\": \"\",\n        \"user_id\": \"\",\n        \"name\": \"\",\n        \"category\": \"\",\n        \"location\": \"\"\n    },\n    \"limit\": 0,\n    \"offset\": 0\n}",
@@ -364,11 +384,10 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/v1/adverts/filter",
+							"raw": "{{domen}}/api/v1/adverts/filter",
 							"host": [
-								"localhost"
+								"{{domen}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -380,6 +399,37 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domen",
+			"value": "161.35.29.71"
+		},
+		{
+			"key": "Authorization",
+			"value": "idk",
+			"type": "string"
 		}
 	]
 }
