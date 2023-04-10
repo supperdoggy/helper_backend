@@ -27,6 +27,9 @@ type IService interface {
 	CreateAdvert(ctx context.Context, name, body, atype, category, location, userID string, attachments [][]byte) (*dbmodels.Advert, error)
 	DeleteAdvert(ctx context.Context, id string) error
 	GetAdvert(ctx context.Context, id string) (*dbmodels.Advert, error)
+
+	// attachments
+	GetAdvertAttachments(ctx context.Context, advertID string) ([]*dbmodels.Attachment, error)
 }
 
 type service struct {

@@ -42,6 +42,7 @@ type IMongoClient interface {
 	CreateAttachment(ctx context.Context, name string, data []byte) (*dbmodels.Attachment, error)
 	DeleteAttachment(ctx context.Context, id string) error
 	GetAttachment(ctx context.Context, id string) (*dbmodels.Attachment, error)
+	GetAdvertAttachments(ctx context.Context, ids []string) ([]*dbmodels.Attachment, error)
 }
 
 type mongoClient struct {

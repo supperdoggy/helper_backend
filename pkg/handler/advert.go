@@ -74,6 +74,8 @@ func (h *handler) DeleteAdvert(c *gin.Context) {
 		return
 	}
 
+	resp.ID = req.ID
+
 	h.logger.Info("DeleteAdvert", zap.Any("resp", resp))
 
 	c.JSON(http.StatusOK, resp)

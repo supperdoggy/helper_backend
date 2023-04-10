@@ -35,3 +35,17 @@ func (c *mongoClient) GetAttachment(ctx context.Context, id string) (*dbmodels.A
 
 	return &attachment, nil
 }
+
+func (c *mongoClient) GetAdvertAttachments(ctx context.Context, ids []string) ([]*dbmodels.Attachment, error) {
+	var attachments []*dbmodels.Attachment
+
+	for _, v := range ids {
+		attachment, err := c.GetAttachment(ctx, v)
+		if err != nil {
+			return nil, err
+		}
+		attachments = append(attachments, attachment)
+	}
+
+	return attachments, nil
+}
