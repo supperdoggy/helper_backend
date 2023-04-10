@@ -38,25 +38,31 @@ func main() {
 
 	api := r.Group("/api/v1")
 
-	// users
-	apiUser := api.Group("/user")
-	apiUser.POST("/create", handlers.CreateUser)
-	apiUser.DELETE("/delete", handlers.DeleteUser)
-	apiUser.PATCH("/update", handlers.UpdateUser)
-
 	// auth
 	auth := api.Group("/auth")
 	auth.POST("/register", handlers.Register)
 	auth.POST("/login", handlers.Login)
 	auth.POST("/check_token", handlers.CheckToken)
 
+	// users
+	apiUser := api.Group("/user")
+	apiUser.Use(handlers.Middleware)
+	{
+		apiUser.POST("/create", handlers.CreateUser)
+		apiUser.DELETE("/delete", handlers.DeleteUser)
+		apiUser.PATCH("/update", handlers.UpdateUser)
+	}
+
 	// adverts
 	adverts := api.Group("/adverts")
-	adverts.POST("/create", handlers.CreateAdvert)
-	adverts.DELETE("/delete", handlers.DeleteAdvert)
-	adverts.POST("/get", handlers.GetAdvert)
-	adverts.POST("/filter", handlers.GetAdverts)
-	adverts.GET("/attachments/:id", handlers.GetAdvertAttachments)
+	adverts.Use(handlers.Middleware)
+	{
+		adverts.POST("/create", handlers.CreateAdvert)
+		adverts.DELETE("/delete", handlers.DeleteAdvert)
+		adverts.POST("/get", handlers.GetAdvert)
+		adverts.POST("/filter", handlers.GetAdverts)
+		adverts.GET("/attachments/:id", handlers.GetAdvertAttachments)
+	}
 
 	if err := r.Run(fmt.Sprintf("localhost:%d", cfg.Port)); err != nil {
 		logger.Fatal("error r.Run", zap.Error(err))
