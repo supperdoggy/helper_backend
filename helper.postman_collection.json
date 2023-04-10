@@ -205,6 +205,179 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "email check",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://evservice.azurewebsites.net/Email?email=supperspggy229%40gmail.com",
+							"protocol": "https",
+							"host": [
+								"evservice",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"Email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "supperspggy229%40gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "adverts",
+			"item": [
+				{
+					"name": "create advert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"333333\",\n    \"name\": \"Хочу пив123а....\",\n\t\"body\": \"Дайте пива будьвфівфі ласка я вас дуже прошу....\",\n\t\"type\": \"request\",\n\t\"category\": \"Жир\",\n\t\"location\": \"Львів\",\n    \"attachments\": [[1, 1, 1], [2, 2, 2]]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/adverts/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"adverts",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get advert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"f48f8d24-a559-4ae0-b09a-4a2d0499c3f4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/adverts/get",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"adverts",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get attachments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/adverts/attachments/4af106bc-f0ec-43e9-b95e-396fd971b9d0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"adverts",
+								"attachments",
+								"4af106bc-f0ec-43e9-b95e-396fd971b9d0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete advert",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"4af106bc-f0ec-43e9-b95e-396fd971b9d0\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/adverts/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"adverts",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"filter\": {\n        \"type\": \"\",\n        \"user_id\": \"\",\n        \"name\": \"\",\n        \"category\": \"\",\n        \"location\": \"\"\n    },\n    \"limit\": 0,\n    \"offset\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v1/adverts/filter",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"adverts",
+								"filter"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
