@@ -111,32 +111,38 @@ func (h *handler) GetAdvert(c *gin.Context) {
 	c.JSON(http.StatusOK, resp)
 }
 
-// func (h *handler) GetAdverts(c *gin.Context) {
-// 	var (
-// 		req  models.GetAdvertsRequest
-// 		resp models.GetAdvertsResponse
-// 		err  error
-// 	)
+func (h *handler) GetAdverts(c *gin.Context) {
+	var (
+		req  models.GetAdvertsRequest
+		resp models.GetAdvertsResponse
+		err  error
+	)
 
-// 	if err := c.Bind(&req); err != nil {
-// 		h.logger.Error("error Bing", zap.Error(err))
-// 		resp.Error = "error reading request"
-// 		c.JSON(http.StatusBadRequest, resp)
-// 		return
-// 	}
+	if err := c.Bind(&req); err != nil {
+		h.logger.Error("error Bing", zap.Error(err))
+		resp.Error = "error reading request"
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
 
-// 	h.logger.Info("GetAdverts", zap.Any("req", req))
+	h.logger.Info("GetAdverts", zap.Any("req", req))
 
-// 	adverts, err := h.service.GetAdverts(c.Request.Context(), req.Limit, req.Offset)
-// 	if err != nil {
-// 		h.logger.Error("error getting adverts", zap.Error(err))
-// 		resp.Error = err.Error()
-// 		c.JSON(http.StatusBadRequest, resp)
-// 		return
-// 	}
+	adverts, err := h.service.GetAdverts(c.Request.Context(), req.Filter, req.Limit, req.Offset)
+	if err != nil {
+		h.logger.Error("error getting adverts", zap.Error(err))
+		resp.Error = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
 
-// 	resp.Adverts = utils.MapDBAdvertsToModelAdverts(adverts, nil)
-// 	h.logger.Info("GetAdverts", zap.Any("resp", resp))
+	resp.Adverts = utils.MapDBAdvertsToModelAdverts(adverts)
+	h.logger.Info("GetAdverts", zap.Any("resp", resp))
 
-// 	c.JSON(http.StatusOK, resp)
-// }
+	if len(adverts) == 0 {
+		h.logger.Info("GetAdverts", zap.Any("resp", resp))
+		c.JSON(http.StatusNotFound, resp)
+		return
+	}
+
+	c.JSON(http.StatusOK, resp)
+}

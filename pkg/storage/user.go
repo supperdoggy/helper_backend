@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/supperdoggy/helper/pkg/models"
 	"github.com/supperdoggy/helper/pkg/models/dbmodels"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -43,6 +44,7 @@ type IMongoClient interface {
 	DeleteAttachment(ctx context.Context, id string) error
 	GetAttachment(ctx context.Context, id string) (*dbmodels.Attachment, error)
 	GetAdvertAttachments(ctx context.Context, ids []string) ([]*dbmodels.Attachment, error)
+	GetAdverts(ctx context.Context, filter models.AdvertsFilter, limit, offset int) ([]*dbmodels.Advert, error)
 }
 
 type mongoClient struct {

@@ -34,12 +34,12 @@ type GetAdvertResponse struct {
 }
 
 type GetAdvertsRequest struct {
-	Filter *AdvertsFilter `json:"filter"`
-	Limit  int            `json:"limit"`
-	Offset int            `json:"offset"`
+	Filter AdvertsFilter `json:"filter"`
+	Limit  int           `json:"limit"`
+	Offset int           `json:"offset"`
 }
 
 type GetAdvertsResponse struct {
-	Adverts []Advert `json:"adverts"`
-	Error   string   `json:"error"`
+	Adverts []*Advert `json:"adverts"`
+	Error   string    `json:"error"`
 }

@@ -55,6 +55,7 @@ func main() {
 	adverts.POST("/create", handlers.CreateAdvert)
 	adverts.DELETE("/delete", handlers.DeleteAdvert)
 	adverts.POST("/get", handlers.GetAdvert)
+	adverts.POST("/filter", handlers.GetAdverts)
 	adverts.GET("/attachments/:id", handlers.GetAdvertAttachments)
 
 	if err := r.Run(fmt.Sprintf("localhost:%d", cfg.Port)); err != nil {

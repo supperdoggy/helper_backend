@@ -6,7 +6,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/supperdoggy/helper/pkg/models"
 	"github.com/supperdoggy/helper/pkg/models/dbmodels"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -65,4 +67,40 @@ func (c *mongoClient) GetAdvert(ctx context.Context, id string) (*dbmodels.Adver
 	}
 
 	return &user, nil
+}
+
+func (c *mongoClient) GetAdverts(ctx context.Context, filter models.AdvertsFilter, limit, offset int) ([]*dbmodels.Advert, error) {
+	var adverts []*dbmodels.Advert
+	opts := options.Find()
+	opts.SetLimit(int64(limit))
+	opts.SetSkip(int64(offset))
+
+	query := bson.M{}
+
+	if filter.Type != nil {
+		query["type"] = *filter.Type
+	}
+	if filter.Category != nil {
+		query["category"] = *filter.Category
+	}
+	if filter.Location != nil {
+		query["location"] = *filter.Location
+	}
+	if filter.UserID != nil {
+		query["user_id"] = *filter.UserID
+	}
+	if filter.Name != nil {
+		query["name"] = bson.M{"$regex": *filter.Name}
+	}
+	fmt.Println(query)
+
+	resp, err := c.advertsCol.Find(ctx, query, opts)
+	if err != nil {
+		return nil, err
+	}
+	if err := resp.All(ctx, &adverts); err != nil {
+		return nil, err
+	}
+
+	return adverts, nil
 }

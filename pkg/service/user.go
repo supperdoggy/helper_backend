@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/supperdoggy/helper/pkg/models"
 	"github.com/supperdoggy/helper/pkg/models/dbmodels"
 	"github.com/supperdoggy/helper/pkg/storage"
 	"github.com/supperdoggy/helper/pkg/utils"
@@ -27,6 +28,7 @@ type IService interface {
 	CreateAdvert(ctx context.Context, name, body, atype, category, location, userID string, attachments [][]byte) (*dbmodels.Advert, error)
 	DeleteAdvert(ctx context.Context, id string) error
 	GetAdvert(ctx context.Context, id string) (*dbmodels.Advert, error)
+	GetAdverts(ctx context.Context, filter models.AdvertsFilter, limit, offset int) ([]*dbmodels.Advert, error)
 
 	// attachments
 	GetAdvertAttachments(ctx context.Context, advertID string) ([]*dbmodels.Attachment, error)

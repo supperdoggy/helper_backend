@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	"github.com/supperdoggy/helper/pkg/models"
 	"github.com/supperdoggy/helper/pkg/models/dbmodels"
 	"go.uber.org/zap"
 )
@@ -34,11 +35,11 @@ func (s *service) GetAdvert(ctx context.Context, id string) (*dbmodels.Advert, e
 	return advert, nil
 }
 
-// func (s *service) GetAdverts(ctx context.Context, filter models.AdvertsFilter) ([]dbmodels.Advert, error) {
-// 	adverts, err := s.db.GetAdverts(ctx, limit, offset)
-// 	if err != nil {
-// 		s.logger.Error("failed to get adverts", zap.Error(err))
-// 		return nil, err
-// 	}
-// 	return adverts, nil
-// }
+func (s *service) GetAdverts(ctx context.Context, filter models.AdvertsFilter, limit, offset int) ([]*dbmodels.Advert, error) {
+	adverts, err := s.db.GetAdverts(ctx, filter, limit, offset)
+	if err != nil {
+		s.logger.Error("failed to get adverts", zap.Error(err))
+		return nil, err
+	}
+	return adverts, nil
+}

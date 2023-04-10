@@ -19,10 +19,9 @@ type Adverts struct {
 }
 
 type AdvertsFilter struct {
-	UserID    *string `json:"user_id,omitempty"`
-	Type      *string `json:"type,omitempty"`
-	Category  *string `json:"category,omitempty"`
-	Location  *string `json:"location,omitempty"`
-	Name      *string `json:"name,omitempty"`
-	CreatedAt *int64  `json:"created_at,omitempty"`
+	UserID   *string `json:"user_id,omitempty"`
+	Type     *string `json:"type,omitempty"`
+	Category *string `json:"category,omitempty"`
+	Location *string `json:"location,omitempty"`
+	Name     *string `json:"name,omitempty"`
 }

@@ -19,3 +19,13 @@ func MapDBAdvertToModelAdvert(dbAdvert *dbmodels.Advert) *models.Advert {
 		EditedAt:    dbAdvert.EditedAt,
 	}
 }
+
+// map db advert to model advert
+func MapDBAdvertsToModelAdverts(dbAdverts []*dbmodels.Advert) []*models.Advert {
+	var adverts []*models.Advert
+	for _, dbAdvert := range dbAdverts {
+		adverts = append(adverts, MapDBAdvertToModelAdvert(dbAdvert))
+	}
+
+	return adverts
+}

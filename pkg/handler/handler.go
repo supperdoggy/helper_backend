@@ -21,6 +21,7 @@ type IHandler interface {
 	CreateAdvert(c *gin.Context)
 	DeleteAdvert(c *gin.Context)
 	GetAdvert(c *gin.Context)
+	GetAdverts(c *gin.Context)
 
 	// get advert attachments
 	GetAdvertAttachments(c *gin.Context)
