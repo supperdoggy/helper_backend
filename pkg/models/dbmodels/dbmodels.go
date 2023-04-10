@@ -18,6 +18,12 @@ type Token struct {
 	Expire   time.Time `json:"expire"`
 }
 
+type EmailCode struct {
+	Email  string    `json:"email"`
+	Code   string    `json:"code"`
+	Expire time.Time `json:"expire"`
+}
+
 type Advert struct {
 	ID          string   `bson:"_id"`
 	UserID      string   `bson:"user_id"`

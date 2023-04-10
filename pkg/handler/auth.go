@@ -122,3 +122,76 @@ func (h *handler) Register(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, resp)
 }
+
+func (h *handler) NewEmailCode(c *gin.Context) {
+	var (
+		req  models.NewEmailCodeReq
+		resp models.NewEmailCodeResp
+		err  error
+	)
+
+	if err := c.Bind(&req); err != nil {
+		h.logger.Error("error Bing", zap.Error(err))
+		resp.Error = "error reading request"
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	if err := validation.ValidateStruct(&req,
+		validation.Field(&req.Email, validation.Required, is.Email),
+	); err != nil {
+		h.logger.Error("error Bing", zap.Error(err))
+		resp.Error = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	err = h.service.NewEmailCode(c.Request.Context(), req.Email)
+	if err != nil {
+		h.logger.Error("error Bing", zap.Error(err))
+		resp.Error = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	resp.OK = true
+
+	c.JSON(http.StatusOK, resp)
+}
+
+func (h *handler) CheckEmailCode(c *gin.Context) {
+	var (
+		req  models.CheckEmailCodeReq
+		resp models.CheckEmailCodeResp
+		err  error
+	)
+
+	if err := c.Bind(&req); err != nil {
+		h.logger.Error("error Bing", zap.Error(err))
+		resp.Error = "error reading request"
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	if err := validation.ValidateStruct(&req,
+		validation.Field(&req.Email, validation.Required, is.Email),
+		validation.Field(&req.Code, validation.Required),
+	); err != nil {
+		h.logger.Error("error Bing", zap.Error(err))
+		resp.Error = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	err = h.service.CheckEmailCode(c.Request.Context(), req.Email, req.Code)
+	if err != nil {
+		h.logger.Error("error Bing", zap.Error(err))
+		resp.Error = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	resp.OK = true
+
+	c.JSON(http.StatusOK, resp)
+}
