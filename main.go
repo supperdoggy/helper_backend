@@ -55,6 +55,7 @@ func main() {
 		apiUser.POST("/create", handlers.CreateUser)
 		apiUser.DELETE("/delete", handlers.DeleteUser)
 		apiUser.PATCH("/update", handlers.UpdateUser)
+		apiUser.GET("/get/:id", handlers.GetUser)
 	}
 
 	// adverts

@@ -31,8 +31,9 @@ func ValidateUserEmailAndPassword(email, password string) error {
 // The new instance has ID, Email, CreatedAt, and EditedAt fields set to corresponding values of the input
 func MapDBUserToResponseUser(u dbmodels.User) *models.User {
 	return &models.User{
-		ID:    u.ID,
-		Email: u.Email,
+		ID:       u.ID,
+		Email:    u.Email,
+		FullName: u.FullName,
 
 		CreatedAt: u.CreatedAt,
 		EditedAt:  u.EditedAt,

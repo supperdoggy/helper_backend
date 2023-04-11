@@ -88,3 +88,23 @@ func (h *handler) UpdateUser(c *gin.Context) {
 	resp.User = utils.MapDBUserToResponseUser(*user)
 	c.JSON(http.StatusBadRequest, resp)
 }
+
+func (h *handler) GetUser(c *gin.Context) {
+	var (
+		resp models.GetUserResponse
+		ctx  context.Context
+		err  error
+	)
+	userID := c.Param("id")
+
+	user, err := h.service.GetUser(ctx, userID)
+	if err != nil {
+		h.logger.Error("error GetUser", zap.Error(err), zap.Any("id", userID))
+		resp.Error = err.Error()
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
+	resp.User = utils.MapDBUserToResponseUser(*user)
+	c.JSON(http.StatusOK, resp)
+}
