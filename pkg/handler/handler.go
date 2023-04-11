@@ -11,6 +11,7 @@ type IHandler interface {
 	CreateUser(c *gin.Context)
 	DeleteUser(c *gin.Context)
 	UpdateUser(c *gin.Context)
+	GetUser(c *gin.Context)
 
 	// auth
 	Login(c *gin.Context)

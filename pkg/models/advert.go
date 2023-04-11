@@ -2,6 +2,7 @@ package models
 
 // Advert is a model for advert
 type Advert struct {
+	ID          string   `json:"id"`
 	UserID      string   `json:"user_id"`
 	Name        string   `json:"name"`
 	Body        string   `json:"body"`

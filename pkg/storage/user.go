@@ -29,7 +29,7 @@ type emailCodeCache struct {
 
 type IMongoClient interface {
 	// user
-	CreateUser(ctx context.Context, email string, password []byte) (*dbmodels.User, error)
+	CreateUser(ctx context.Context, email, fullname string, password []byte) (*dbmodels.User, error)
 	DeleteUser(ctx context.Context, id string) error
 	UpdateUser(ctx context.Context, id, email string, password []byte) error
 	GetUser(ctx context.Context, id string) (*dbmodels.User, error)
@@ -92,10 +92,11 @@ func NewMongoClient(ctx context.Context, url string, l *zap.Logger) (IMongoClien
 	}, nil
 }
 
-func (c *mongoClient) CreateUser(ctx context.Context, email string, password []byte) (*dbmodels.User, error) {
+func (c *mongoClient) CreateUser(ctx context.Context, email, fullname string, password []byte) (*dbmodels.User, error) {
 	u := dbmodels.User{
 		ID:        uuid.New().String(),
 		Email:     email,
+		FullName:  fullname,
 		Password:  password,
 		CreatedAt: time.Now().Unix(),
 	}

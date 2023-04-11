@@ -18,6 +18,7 @@ type IService interface {
 	CreateUser(ctx context.Context, password, email, fullName string) (*dbmodels.User, error)
 	DeleteUser(ctx context.Context, id string) (*string, error)
 	UpdateUser(ctx context.Context, id, password, email string) (*dbmodels.User, error)
+	GetUser(ctx context.Context, id string) (*dbmodels.User, error)
 
 	// auth
 	NewToken(ctx context.Context, userID string) (token string, err error)
@@ -69,7 +70,7 @@ func (s *service) CreateUser(ctx context.Context, password, email, fullname stri
 		return nil, err
 	}
 
-	resp, err := s.db.CreateUser(ctx, email, hashed)
+	resp, err := s.db.CreateUser(ctx, email, fullname, hashed)
 	if err != nil {
 		s.logger.Error("error CreateUser", zap.Error(err))
 		return nil, err
@@ -106,6 +107,16 @@ func (s *service) UpdateUser(ctx context.Context, id, password, email string) (*
 		return nil, err
 	}
 
+	user, err := s.db.GetUser(ctx, id)
+	if err != nil {
+		s.logger.Error("error getting user", zap.Any("id", id), zap.Error(err))
+		return nil, err
+	}
+
+	return user, nil
+}
+
+func (s *service) GetUser(ctx context.Context, id string) (*dbmodels.User, error) {
 	user, err := s.db.GetUser(ctx, id)
 	if err != nil {
 		s.logger.Error("error getting user", zap.Any("id", id), zap.Error(err))

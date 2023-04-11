@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test2@mail.com\",\n    \"password\": \"admin@asdxz123\"\n}",
+							"raw": "{\n    \"email\": \"test2@mail.com\",\n    \"password\": \"admin@asdxz123\",\n    \"full_name\": \"maksym marchyshak\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -83,7 +83,13 @@
 					"name": "update",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"id\": \"05acfdb7-a2d7-4ba3-8a68-58777088d029\",\n    \"email\": \"random@mail.com\",\n    \"password\": \"Ssdz@1sdSzc123v\"\n}",
@@ -107,6 +113,33 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Authorization}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{domen}}/api/v1/user/get/93f3736e-5c2b-462b-88cc-5c7dasbb13f4d2c",
+							"host": [
+								"{{domen}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"get",
+								"93f3736e-5c2b-462b-88cc-5c7dasbb13f4d2c"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -120,7 +153,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"token23213@mail.com\",\n    \"first_name\": \"Maksym\",\n    \"last_name\": \"Marchyshak\",\n    \"password\": \"randomPass123123213@\"\n}",
+							"raw": "{\n    \"email\": \"token21233213@mail.com\",\n    \"first_name\": \"Maksym\",\n    \"last_name\": \"Marchyshak\",\n    \"password\": \"randomPass123123213@\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -231,6 +264,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"supperspggy229@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{domen}}/api/v1/auth/new_email_code",
 							"host": [
@@ -251,6 +293,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"supperspggy229@gmail.com\",\n    \"code\": \"SSVDBFGZ\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{domen}}/api/v1/auth/check_email_code",
 							"host": [
@@ -353,7 +404,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{domen}}/api/v1/adverts/attachments/4af106bc-f0ec-43e9-b95e-396fd971b9d0",
+							"raw": "{{domen}}/api/v1/adverts/attachments/6b35cd5b-b9e3-4675-9e64-2bd360ef6a17",
 							"host": [
 								"{{domen}}"
 							],
@@ -362,7 +413,7 @@
 								"v1",
 								"adverts",
 								"attachments",
-								"4af106bc-f0ec-43e9-b95e-396fd971b9d0"
+								"6b35cd5b-b9e3-4675-9e64-2bd360ef6a17"
 							]
 						}
 					},

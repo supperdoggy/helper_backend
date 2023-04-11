@@ -34,3 +34,8 @@ type UpdateUserResponse struct {
 type ErrorResponse struct {
 	Error string `json:"error"`
 }
+
+type GetUserResponse struct {
+	User  *User  `json:"user,omitempty"`
+	Error string `json:"error,omitempty"`
+}
