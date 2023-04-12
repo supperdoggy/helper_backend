@@ -8,6 +8,7 @@ import (
 // map db advert to model advert
 func MapDBAdvertToModelAdvert(dbAdvert *dbmodels.Advert) *models.Advert {
 	return &models.Advert{
+		ID:          dbAdvert.ID,
 		UserID:      dbAdvert.UserID,
 		Name:        dbAdvert.Name,
 		Body:        dbAdvert.Body,
