@@ -1,7 +1,6 @@
 package models
 
 type CreateAdvertRequest struct {
-	UserID      string   `json:"user_id"`
 	Name        string   `json:"name"`
 	Body        string   `json:"body"`
 	Type        string   `json:"type"`
