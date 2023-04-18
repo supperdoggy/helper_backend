@@ -24,7 +24,7 @@ func (h *handler) CreateAdvert(c *gin.Context) {
 		return
 	}
 
-	if err := validation.ValidateStruct(&req, validation.Field(&req.UserID, validation.Required),
+	if err := validation.ValidateStruct(&req,
 		validation.Field(&req.Body, validation.Required, validation.Length(10, 10000)),
 		validation.Field(&req.Category, validation.Required), validation.Field(&req.Name, validation.Required),
 		validation.Field(&req.Location, validation.Required), validation.Field(&req.Type, validation.Required)); err != nil {
@@ -34,9 +34,17 @@ func (h *handler) CreateAdvert(c *gin.Context) {
 		return
 	}
 
+	userID, ok := c.Get("userID")
+	if !ok {
+		h.logger.Error("no userID in context")
+		resp.Error = "no userID in context"
+		c.JSON(http.StatusBadRequest, resp)
+		return
+	}
+
 	h.logger.Info("CreateAdvert", zap.Any("req", req))
 
-	advert, err := h.service.CreateAdvert(c.Request.Context(), req.Name, req.Body, req.Type, req.Category, req.Location, req.UserID, req.Attachments)
+	advert, err := h.service.CreateAdvert(c.Request.Context(), req.Name, req.Body, req.Type, req.Category, req.Location, userID.(string), req.Attachments)
 	if err != nil {
 		h.logger.Error("error creating advert", zap.Error(err))
 		resp.Error = err.Error()
